@@ -35,23 +35,21 @@ struct Yigin {
 
 int main()
 {
-    Kuyruk* kyrk = new Kuyruk();
+    Yigin* ygn = new Yigin();
+    ygn->olustur();
 
-    kyrk->olustur();
-    kyrk->ekle(5);
-    kyrk->ekle(2);
-    kyrk->ekle(3);
-    kyrk->ekle(4);
-    kyrk->cikar();
+    ygn->ekle(3);
+    ygn->ekle(1);
+    ygn->ekle(7);
+    ygn->ekle(4);
+    ygn->ekle(8);
+    ygn->cikar();
     
-    kyrk->yazdir();
-        
-    if (kyrk->bosMu())
-    {
-        std::cout << "Kuyruk Bos\n";
-    }
-    kyrk->kapat();
-  
+
+    ygn->yazdir();
+
+    ygn->kapat();
+
 }
 
 
@@ -77,7 +75,7 @@ void Kuyruk::kapat()
 
 void Kuyruk::ekle(int deger)
 {
-    if (bas ==NULL)
+    if (bosMu())
     {
         bas = (Dugum*)malloc(sizeof(Dugum));
         bas->veri = deger;
@@ -127,50 +125,86 @@ void Kuyruk::yazdir()
 
 void Yigin::olustur()
 {
-    
-
+    k1.bas = NULL;
+    k2.bas = NULL;
 }
 
 void Yigin::kapat()
 {
-    
+    Dugum* n;
+    while (k1.bas)
+    {
+        n = k1.bas;
+        k1.bas = k1.bas->sonraki;
+        delete n;
+    }
 }
 
 void Yigin::ekle(int deger)
 {
+    Kuyruk* kyrk = new Kuyruk();
     
-    k1.son->veri = deger;
-    k2.bas->veri = k1.son->veri;
-    k1.son->sonraki = k2.bas;
-    k2.bas = k1.son;
-
+    k2.ekle(deger);
+    
+    while (!bosMu())
+    {
+        k2.ekle(k1.bas->veri);
+        k1.cikar();
+    }
+    
+    Kuyruk temp = k1;
+    k1 = k2;
+    k2 = temp;
 }
 
 int Yigin::cikar()
 {
-    
-    return 0;
+    if (bosMu())
+    {
+        printf("Yigin yapisi bos");
+        return -1;
+    }
+    return k1.cikar();
 }
 
 bool Yigin::bosMu()
 {
-    return false;
+    return k1.bosMu();
 }
 
 int Yigin::tepe()
 {
-    return 0;
+    if (k1.bosMu())
+    {
+        return -1;
+    }
+
+    return k1.bas->veri;
 }
 
 void Yigin::yazdir()
 {
+    while (k1.bas != NULL)
+    {
+        printf("%d ", k1.bas->veri);
+        k1.bas = k1.bas->sonraki;
+    }
+}
+
+
+
+void yiginCikar(Yigin* s) 
+{
 
 }
 
-void yiginCikar(Yigin* s) {
+void siraliEkle(Yigin* s, int x)
+{
+    Yigin* ygn = new Yigin();
 
-}
-
-void siraliEkle(Yigin* s, int x) {
+    if (ygn->bosMu())
+    {
+        
+    }
 
 }
